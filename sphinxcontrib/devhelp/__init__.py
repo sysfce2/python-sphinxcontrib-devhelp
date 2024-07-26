@@ -118,13 +118,13 @@ class DevhelpBuilder(StandaloneHTMLBuilder):
                     write_index("%s %s" % (parent_title, subitem[0]),
                                 subitem[1], [])
 
-        for (key, group) in index:
-            for title, (refs, subitems, key) in group:
+        for (_group_key, group) in index:
+            for title, (refs, subitems, _category_key) in group:
                 write_index(title, refs, subitems)
 
         # Dump the XML file
         xmlfile = path.join(outdir, outname + '.devhelp.gz')
-        with gzip.open(xmlfile, 'w') as f:
+        with gzip.GzipFile(filename=xmlfile, mode='w', mtime=0) as f:
             tree.write(f, 'utf-8')  # type: ignore
 
 
